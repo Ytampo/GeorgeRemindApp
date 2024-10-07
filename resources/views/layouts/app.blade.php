@@ -6,7 +6,8 @@
         {{-- CSRF Token --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" href="{{ asset('img/logo-fire.jpg') }}">
+        <title>単位危機管理アプリ</title>
 
         <!-- Fonts -->
         <style>
@@ -53,7 +54,7 @@
                     <a href="{{ route('schedule') }}"><img class="footer-logo" src="{{ asset('img/time-logo.png') }}"></a>
                 </div>
             </footer>
-            
+
             <!-- ServiceWorkerの登録情報(PWAに必要) -->
             <script>
                 if ('serviceWorker' in navigator) {
