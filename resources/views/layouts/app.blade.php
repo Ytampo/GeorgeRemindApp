@@ -3,34 +3,71 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        {{-- CSRF Token --}}
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" href="{{ asset('img/logo-fire.jpg') }}">
+        <title>単位危機管理アプリ</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200..900&display=swap');
+        </style>
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="{{ asset('js/app.js') }}"></script>
+        <link rel="manifest" href="{{ asset('js/manifest.json') }}">
+        <script src="{{ asset('js/no-scroll.js') }}" defer></script>
+        @yield('js')
+
+        <!-- Styles -->
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        @yield('css')
+
+        <!-- デバイス表示領域の設定 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
+            <!-- ノッチ領域の余白 -->
+            <div class="notch-bar"></div>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <!-- 画面上部の余白 -->
+            <div class="space"></div>
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield('content')
             </main>
+
+            <!-- 画面下部タブバー -->
+            <footer>
+                <div class="footer-item">
+                    <a href="{{ route('add-task') }}"><img class="footer-logo" src="{{ asset('img/reg-assignment-logo.png') }}"></a>
+                </div>
+                <div class="footer-item">
+                    <a href="{{ route('dashboard') }}"><img class="footer-logo" src="{{ asset('img/home-logo.png') }}"></a>
+                </div>
+                <div class="footer-item">
+                    <a href="{{ route('schedule') }}"><img class="footer-logo" src="{{ asset('img/time-logo.png') }}"></a>
+                </div>
+            </footer>
+
+            <!-- ServiceWorkerの登録情報(PWAに必要) -->
+            <script>
+                if ('serviceWorker' in navigator) {
+                    window.addEventListener('load', function() {
+                        navigator.serviceWorker.register('/js/service-worker.js')
+                            .then(function(registration) {
+                                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                            }, function(err) {
+                                console.log('ServiceWorker registration failed: ', err);
+                            });
+                    });
+                }
+            </script>
         </div>
     </body>
 </html>
