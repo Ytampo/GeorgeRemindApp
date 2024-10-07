@@ -19,11 +19,11 @@
         <script src="{{ asset('js/app.js') }}"></script>
         <link rel="manifest" href="{{ asset('js/manifest.json') }}">
         <script src="{{ asset('js/no-scroll.js') }}" defer></script>
+        @yield('js')
 
         <!-- Styles -->
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         @yield('css')
-        @yield('js')
 
         <!-- デバイス表示領域の設定 -->
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
